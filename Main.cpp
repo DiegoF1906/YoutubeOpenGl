@@ -14,49 +14,57 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
+// ==========================================
 // VÉRTICES DEL CUBO
 // X, Y, Z, U, V
+// ==========================================
+
+
 GLfloat vertices[] =
 {
-	// CARA FRONTAL
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    // CARA FRONTAL (Normal: 0, 0, 1)
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f,
 
-	// CARA TRASERA
-	-0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    // CARA TRASERA (Normal: 0, 0, -1)
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,-1.0f,  1.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 0.0f,-1.0f,  0.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f, 0.0f,-1.0f,  0.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 0.0f,-1.0f,  1.0f, 1.0f,
 
-	// CARA IZQUIERDA
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    // CARA IZQUIERDA (Normal: -1, 0, 0)
+    -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f,  0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f, 0.0f, 0.0f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f, 0.0f, 0.0f,  0.0f, 1.0f,
 
-	// CARA DERECHA
-	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    // CARA DERECHA (Normal: 1, 0, 0)
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 1.0f,
 
-	 // CARA SUPERIOR
-	 -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-	  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    // CARA SUPERIOR (Normal: 0, 1, 0)
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
 
-	 // CARA INFERIOR
-	 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	  0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	  0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
-	 -0.5f, -0.5f,  0.5f,  0.0f, 1.0f
+    // CARA INFERIOR (Normal: 0, -1, 0)
+    -0.5f, -0.5f, -0.5f,  0.0f,-1.0f, 0.0f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,-1.0f, 0.0f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,-1.0f, 0.0f,  1.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,-1.0f, 0.0f,  0.0f, 1.0f
 };
 
 
-// ÍNDICES DEL CUBO
+
+// ==========================================
+// ÍNDICES
+// ==========================================
+
 GLuint indices[] =
 {
 	// CARA FRONTAL
@@ -87,6 +95,10 @@ GLuint indices[] =
 
 int main()
 {
+	// ==========================================
+	// INICIALIZAR GLFW
+	// ==========================================
+
 	glfwInit();
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -115,11 +127,17 @@ int main()
 	glViewport(0, 0, 800, 800);
 
 
+	// ==========================================
 	// SHADER
+	// ==========================================
+
 	Shader shaderProgram("default.vert", "default.frag");
 
 
-	// VAO Y VBO
+	// ==========================================
+	// VAO, VBO Y EBO
+	// ==========================================
+
 	VAO VAO1;
 	VAO1.Bind();
 
@@ -127,32 +145,42 @@ int main()
 	EBO EBO1(indices, sizeof(indices));
 
 
-	// ATRIBUTO DE POSICIÓN
+
+	// POSICIÓN
 	VAO1.LinkVBO(
 		VBO1,
 		0,
 		3,
-		5 * sizeof(float),
+		8 * sizeof(float),
 		0
 	);
 
-
-	// ATRIBUTO DE TEXTURA
+	// NORMALES
 	VAO1.LinkVBO(
 		VBO1,
 		1,
-		2,
-		5 * sizeof(float),
+		3,
+		8 * sizeof(float),
 		3 * sizeof(float)
 	);
 
+	// COORDENADAS DE TEXTURA
+	VAO1.LinkVBO(
+		VBO1,
+		2,
+		2,
+		8 * sizeof(float),
+		6 * sizeof(float)
+	);
 
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
 
-
+	// ==========================================
 	// PROFUNDIDAD
+	// ==========================================
+
 	glEnable(GL_DEPTH_TEST);
 
 
@@ -175,11 +203,13 @@ int main()
 	GLuint texture;
 
 	glGenTextures(1, &texture);
+
 	glActiveTexture(GL_TEXTURE0);
+
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 
-	// CONFIGURACIÓN DE LA TEXTURA
+	// FILTRADO
 
 	glTexParameteri(
 		GL_TEXTURE_2D,
@@ -192,6 +222,9 @@ int main()
 		GL_TEXTURE_MAG_FILTER,
 		GL_LINEAR
 	);
+
+
+	// REPETICIÓN
 
 	glTexParameteri(
 		GL_TEXTURE_2D,
@@ -206,7 +239,7 @@ int main()
 	);
 
 
-	// ENVIAR IMAGEN A OPENGL
+	// CARGAR IMAGEN
 
 	if (bytes)
 	{
@@ -235,7 +268,7 @@ int main()
 
 
 	// ==========================================
-	// SHADER
+	// CONFIGURAR TEXTURA EN SHADER
 	// ==========================================
 
 	shaderProgram.Activate();
@@ -250,12 +283,51 @@ int main()
 
 
 	// ==========================================
+	// VARIABLES DE LA CÁMARA
+	// ==========================================
+
+	float cameraAngle = 0.0f;
+
+	float cameraHeight = 0.0f;
+
+	float cameraDistance = 2.0f;
+
+
+	// ==========================================
 	// BUCLE PRINCIPAL
 	// ==========================================
 
 	while (!glfwWindowShouldClose(window))
 	{
+		// ==========================================
+		// ENTRADA DEL TECLADO
+		// ==========================================
+
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		{
+			cameraAngle += 0.02f;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		{
+			cameraAngle -= 0.02f;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		{
+			cameraHeight += 0.02f;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		{
+			cameraHeight -= 0.02f;
+		}
+
+
+		// ==========================================
 		// LIMPIAR PANTALLA
+		// ==========================================
+
 		glClearColor(
 			0.07f,
 			0.13f,
@@ -271,15 +343,11 @@ int main()
 
 		shaderProgram.Activate();
 
-
-		// MATRICES
+		// ==========================================
+		// MATRIZ MODEL
+		// ==========================================
 
 		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 projection = glm::mat4(1.0f);
-
-
-		// ROTACIÓN DEL CUBO
 
 		model = glm::rotate(
 			model,
@@ -287,26 +355,69 @@ int main()
 			glm::vec3(0.0f, 1.0f, 0.0f)
 		);
 
+		// ==========================================
+		// POSICIÓN DE LA CÁMARA
+		// ==========================================
 
-		// CÁMARA
+		glm::vec3 cameraPosition;
 
-		view = glm::translate(
-			view,
-			glm::vec3(0.0f, 0.0f, -2.0f)
+		cameraPosition.x =
+			cameraDistance * sin(cameraAngle);
+
+		cameraPosition.y =
+			cameraHeight;
+
+		cameraPosition.z =
+			cameraDistance * cos(cameraAngle);
+
+
+		// ==========================================
+		// CONFIGURACIÓN DE LA LUZ
+		// ==========================================
+
+		// Posición de la luz
+		glUniform3f(
+			glGetUniformLocation(shaderProgram.ID, "lightPos"),
+			1.2f, 1.0f, 2.0f
 		);
 
+		// Color de la luz (blanco)
+		glUniform3f(
+			glGetUniformLocation(shaderProgram.ID, "lightColor"),
+			1.0f, 1.0f, 1.0f
+		);
 
-		// PROYECCIÓN
+		// Posición de la cámara
+		glUniform3fv(
+			glGetUniformLocation(shaderProgram.ID, "viewPos"),
+			1,
+			glm::value_ptr(cameraPosition)
+		);
 
-		projection = glm::perspective(
+		// ==========================================
+		// MATRIZ VIEW
+		// ==========================================
+
+		glm::mat4 view = glm::lookAt(
+			cameraPosition,
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f)
+		);
+
+		// ==========================================
+		// MATRIZ PROJECTION
+		// ==========================================
+
+		glm::mat4 projection = glm::perspective(
 			glm::radians(45.0f),
 			1.0f,
 			0.1f,
 			100.0f
 		);
 
-
-		// UBICACIÓN DE LAS MATRICES
+		// ==========================================
+		// UBICACIÓN DE MATRICES
+		// ==========================================
 
 		int modelLoc =
 			glGetUniformLocation(
@@ -326,8 +437,9 @@ int main()
 				"projection"
 			);
 
-
+		// ==========================================
 		// ENVIAR MATRICES
+		// ==========================================
 
 		glUniformMatrix4fv(
 			modelLoc,
@@ -350,14 +462,20 @@ int main()
 			glm::value_ptr(projection)
 		);
 
-
+		// ==========================================
 		// ACTIVAR TEXTURA
+		// ==========================================
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
 
+		glBindTexture(
+			GL_TEXTURE_2D,
+			texture
+		);
 
-		// DIBUJAR CUBO
+		// ==========================================
+		// DIBUJAR
+		// ==========================================
 
 		VAO1.Bind();
 
@@ -368,24 +486,31 @@ int main()
 			0
 		);
 
-
-		// INTERCAMBIAR BUFFERS
+		// ==========================================
+		// ACTUALIZAR
+		// ==========================================
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-
-	// LIMPIAR
+	// ==========================================
+	// LIMPIAR MEMORIA
+	// ==========================================
 
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
+
 	shaderProgram.Delete();
 
-	glDeleteTextures(1, &texture);
+	glDeleteTextures(
+		1,
+		&texture
+	);
 
 	glfwDestroyWindow(window);
+
 	glfwTerminate();
 
 	return 0;
