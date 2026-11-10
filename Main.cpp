@@ -1,6 +1,5 @@
-#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
+#include "Model.h"
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -132,7 +131,8 @@ int main()
 	// ==========================================
 
 	Shader shaderProgram("default.vert", "default.frag");
-
+	// CARGAR MODELO 3D
+	Model box("Models/Box.glb");
 
 	// ==========================================
 	// VAO, VBO Y EBO
@@ -477,6 +477,7 @@ int main()
 		// DIBUJAR
 		// ==========================================
 
+	// DIBUJAR CUBO
 		VAO1.Bind();
 
 		glDrawElements(
@@ -485,6 +486,28 @@ int main()
 			GL_UNSIGNED_INT,
 			0
 		);
+
+		// DIBUJAR MODELO GLTF
+		glm::mat4 modelBox = glm::mat4(1.0f);
+
+		modelBox = glm::translate(
+			modelBox,
+			glm::vec3(1.5f, 0.0f, 0.0f)
+		);
+
+		modelBox = glm::scale(
+			modelBox,
+			glm::vec3(0.7f)
+		);
+
+		glUniformMatrix4fv(
+			modelLoc,
+			1,
+			GL_FALSE,
+			glm::value_ptr(modelBox)
+		);
+
+		box.Draw();
 
 		// ==========================================
 		// ACTUALIZAR

@@ -3,9 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-<<<<<<< HEAD
-  <Project Path="YoutubeOpenGl.vcxproj" Id="6e16106c-2992-4250-9eb6-054fb2d9c2b2" />
-=======
-  <Project Path="YoutubeOpenGl.vcxproj" />
->>>>>>> ffd620291fdb2f566b3566967f5ecbdaf608225d
+  <Project Path="03-11-26/YoutubeOpenGl.vcxproj" />
 </Solution>
