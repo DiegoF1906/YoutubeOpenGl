@@ -29,12 +29,12 @@ void main()
     vec3 lightDir = normalize(lightPos - FragPos);
 
     // LUZ AMBIENTAL
-    float ambientStrength = 0.2;
+    float ambientStrength = 0.4;
 
     vec3 ambient = ambientStrength * lightColor;
 
     // LUZ DIFUSA
-    float diff = max(dot(norm, lightDir), 0.0);
+    float diff = max(dot(norm, lightDir), 2.0);
 
     vec3 diffuse = diff * lightColor;
 
