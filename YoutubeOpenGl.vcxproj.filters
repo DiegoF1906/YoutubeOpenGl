@@ -62,6 +62,7 @@
     <None Include="bezier.frag">
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shaderClass.h">

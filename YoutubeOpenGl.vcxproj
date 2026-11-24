@@ -167,6 +167,7 @@
     <None Include="bezier.frag" />
     <None Include="default.frag" />
     <None Include="default.vert" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h" />
