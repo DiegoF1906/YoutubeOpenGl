@@ -11,6 +11,156 @@
 #include <cstring>
 #include <cmath>
 
+#include <array>
+
+
+// ==========================================
+// CREAR TEXTURA BLANCA DE RESPALDO
+// ==========================================
+
+GLuint CreateWhiteTexture()
+{
+    unsigned char pixel[] = {
+        255, 255, 255, 255
+    };
+
+    GLuint texture;
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RGBA,
+        1,
+        1,
+        0,
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        pixel
+    );
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    return texture;
+}
+
+
+// ==========================================
+// CARGAR TEXTURA DEL MODELO GLTF
+// ==========================================
+
+GLuint CreateModelTexture(
+    const tinygltf::Model& model,
+    int textureIndex
+)
+{
+    // Si no existe una textura, usar blanco
+    if (textureIndex < 0 ||
+        textureIndex >= (int)model.textures.size())
+    {
+        return CreateWhiteTexture();
+    }
+
+    const tinygltf::Texture& texture =
+        model.textures[textureIndex];
+
+    int imageIndex = texture.source;
+
+    if (imageIndex < 0 ||
+        imageIndex >= (int)model.images.size())
+    {
+        return CreateWhiteTexture();
+    }
+
+    const tinygltf::Image& image =
+        model.images[imageIndex];
+
+    if (image.image.empty() || image.bits != 8)
+    {
+        return CreateWhiteTexture();
+    }
+
+    GLenum format;
+
+    switch (image.component)
+    {
+    case 1:
+        format = GL_RED;
+        break;
+
+    case 2:
+        format = GL_RG;
+        break;
+
+    case 3:
+        format = GL_RGB;
+        break;
+
+    case 4:
+        format = GL_RGBA;
+        break;
+
+    default:
+        return CreateWhiteTexture();
+    }
+
+    GLuint textureID;
+
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        format,
+        image.width,
+        image.height,
+        0,
+        format,
+        GL_UNSIGNED_BYTE,
+        image.image.data()
+    );
+
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_MIN_FILTER,
+        GL_LINEAR_MIPMAP_LINEAR
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_MAG_FILTER,
+        GL_LINEAR
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_WRAP_S,
+        GL_REPEAT
+    );
+
+    glTexParameteri(
+        GL_TEXTURE_2D,
+        GL_TEXTURE_WRAP_T,
+        GL_REPEAT
+    );
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    return textureID;
+}
+
 // ==========================================
 // LEER ATRIBUTOS DEL MODELO
 // ==========================================
@@ -401,10 +551,56 @@ Model::Model(const std::string& path)
                 vertices.push_back(texCoords[i * 2 + 1]);
             }
 
-            // Crear la malla
-            meshes.push_back(
-                new Mesh(vertices, indices)
+
+            // ==========================================
+            // MATERIAL Y TEXTURA
+            // ==========================================
+
+            std::array<float, 4> baseColor = {
+                1.0f, 1.0f, 1.0f, 1.0f
+            };
+
+            int textureIndex = -1;
+
+            // Comprobar si la malla tiene material
+            if (primitive.material >= 0 &&
+                primitive.material < (int)gltfModel.materials.size())
+            {
+                const tinygltf::Material& material =
+                    gltfModel.materials[primitive.material];
+
+                const auto& pbr = material.pbrMetallicRoughness;
+
+                // Leer color base
+                if (pbr.baseColorFactor.size() >= 4)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        baseColor[i] =
+                            (float)pbr.baseColorFactor[i];
+                    }
+                }
+
+                // Leer textura base
+                textureIndex = pbr.baseColorTexture.index;
+            }
+
+            // Crear textura OpenGL
+            GLuint textureID = CreateModelTexture(
+                gltfModel,
+                textureIndex
             );
+
+            // Crear malla con su material
+            meshes.push_back(
+                new Mesh(
+                    vertices,
+                    indices,
+                    textureID,
+                    baseColor
+                )
+            );
+
         }
     }
 
@@ -416,11 +612,11 @@ Model::Model(const std::string& path)
 // DIBUJAR MODELO
 // ==========================================
 
-void Model::Draw()
+void Model::Draw(GLuint shaderProgram)
 {
     for (Mesh* mesh : meshes)
     {
-        mesh->Draw();
+        mesh->Draw(shaderProgram);
     }
 }
 

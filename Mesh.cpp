@@ -2,10 +2,15 @@
 
 Mesh::Mesh(
     const std::vector<GLfloat>& vertices,
-    const std::vector<GLuint>& indices
+    const std::vector<GLuint>& indices,
+    GLuint texture,
+    const std::array<float, 4>& color
 )
 {
     indexCount = (GLsizei)indices.size();
+
+    textureID = texture;
+    baseColor = color;
 
     // Crear VAO
     VAO1 = new VAO();
@@ -23,7 +28,7 @@ Mesh::Mesh(
         indices.size() * sizeof(GLuint)
     );
 
-    // Posición: 3 componentes
+    // Posiciones
     VAO1->LinkVBO(
         *VBO1,
         0,
@@ -32,7 +37,7 @@ Mesh::Mesh(
         0
     );
 
-    // Normales: 3 componentes
+    // Normales
     VAO1->LinkVBO(
         *VBO1,
         1,
@@ -41,7 +46,7 @@ Mesh::Mesh(
         3 * sizeof(GLfloat)
     );
 
-    // Coordenadas UV: 2 componentes
+    // Coordenadas UV
     VAO1->LinkVBO(
         *VBO1,
         2,
@@ -50,13 +55,31 @@ Mesh::Mesh(
         6 * sizeof(GLfloat)
     );
 
-    VAO1->Unbind();
     VBO1->Unbind();
-    EBO1->Unbind();
+
+    // El EBO debe permanecer asociado al VAO.
+    VAO1->Unbind();
 }
 
-void Mesh::Draw()
+void Mesh::Draw(GLuint shaderProgram)
 {
+    // Activar textura
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // Enviar color del material
+    GLint colorLocation = glGetUniformLocation(
+        shaderProgram,
+        "baseColorFactor"
+    );
+
+    glUniform4fv(
+        colorLocation,
+        1,
+        baseColor.data()
+    );
+
+    // Dibujar malla
     VAO1->Bind();
 
     glDrawElements(
@@ -74,6 +97,8 @@ Mesh::~Mesh()
     VAO1->Delete();
     VBO1->Delete();
     EBO1->Delete();
+
+    glDeleteTextures(1, &textureID);
 
     delete VAO1;
     delete VBO1;

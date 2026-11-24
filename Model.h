@@ -19,7 +19,7 @@ public:
     Model(const Model&) = delete;
     Model& operator=(const Model&) = delete;
 
-    void Draw();
+    void Draw(GLuint shaderProgram);
 };
 
 #endif

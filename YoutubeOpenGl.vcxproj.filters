@@ -19,6 +19,9 @@
     <Filter Include="Model">
       <UniqueIdentifier>{6625d8f9-84c4-4ff8-a47f-99270a9fa068}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bezier">
+      <UniqueIdentifier>{11f7ae6c-13df-466e-b3b8-80e8b08a4109}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -45,12 +48,18 @@
     <ClCompile Include="Model.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="BezierCurve.cpp">
+      <Filter>Bezier</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
     <None Include="default.frag">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </None>
+    <None Include="bezier.frag">
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -73,5 +82,19 @@
     <ClInclude Include="Model.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="BezierCurve.h">
+      <Filter>Bezier</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="bezier.vert">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </Text>
+    <Text Include="background.vert">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </Text>
+    <Text Include="background.frag">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </Text>
   </ItemGroup>
 </Project>

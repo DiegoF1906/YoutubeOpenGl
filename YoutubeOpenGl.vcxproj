@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Estudiante\Desktop\03-11-26\Libreries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Estudiante\Desktop\03-11-26\Libreries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\janus\Desktop\Computacion Grafica\YoutubeOpenGl\Libreries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\janus\Desktop\Computacion Grafica\YoutubeOpenGl\Libreries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Estudiante\Desktop\03-11-26\Libreries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Estudiante\Desktop\03-11-26\Libreries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\janus\Desktop\Computacion Grafica\YoutubeOpenGl\Libreries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\janus\Desktop\Computacion Grafica\YoutubeOpenGl\Libreries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,20 +159,28 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="shaderClass.cpp" />
+    <ClCompile Include="BezierCurve.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bezier.frag" />
     <None Include="default.frag" />
     <None Include="default.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h" />
+    <ClInclude Include="BezierCurve.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="shaderClass.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="bezier.vert" />
+    <Text Include="background.vert" />
+    <Text Include="background.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
